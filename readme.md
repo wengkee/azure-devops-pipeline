@@ -63,8 +63,18 @@ Detailed steps at [Azure DevOps official page](https://learn.microsoft.com/en-us
         system:serviceaccount:azure-build-1:azure-build-sa \
         --namespace=azure-build
 
+## Create Secrets
+        oc create secret generic azdevops \                 
+        --from-literal=AZP_URL=${AZP_URL} \
+        --from-literal=AZP_TOKEN=${AZP_TOKEN} \
+        --from-literal=AZP_POOL=${AZP_POOL}
 
+## Deploy
+        oc apply -k openshift/azure-build-1
+        oc apply -f openshift/azure-build-1/rolebinding.yaml
 
+## Delete
+        kustomize build openshift/azure-build-1 | oc delete -f -
 
 ## References
 1. Azure DevOps with Managed OpenShift

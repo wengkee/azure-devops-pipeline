@@ -1,10 +1,28 @@
----
 namespace: azure-build-1
 
 resources:
-  - ../base
-  - namespace.yaml
-  - clusterrolebinding.yaml
+- ../base
+- namespace.yaml
+# excluded to run separately, the ns generated in Kustomize is not the intended ns
+# - rolebinding.yaml 
 
-patchesStrategicMerge:
-  - deployment.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+patches:
+- path: deployment.yaml
+- path: clusterrolebinding.yaml
+
+# patchesJson6902:
+# - patch: |-
+#     - op: replace
+#       path: /kind
+#       value: RoleBinding
+#     - op: add
+#       path: /metadata/namespace
+#       value: 
+#         azure-build 
+#   target:
+#     group: rbac.authorization.k8s.io
+#     kind: ClusterRoleBinding
+#     name: system:image-puller
+#     version: v1

@@ -5,5 +5,5 @@ resources:
   - deployment.yaml
   - service-account.yaml
   - scc.yaml
-  # - clusterrolebinding.yaml
+  - clusterrolebinding.yaml
   
