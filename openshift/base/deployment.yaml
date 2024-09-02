@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azure-build-agent
+spec:
+  selector:
+    matchLabels:
+      app: azure-build-agent
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: azure-build-agent
+    spec:
+      containers:
+        - name: azure-build-agent
+          image: azure-build-agent:latest
+          imagePullPolicy: Always
+          envFrom:
+          - secretRef:
+              name: azdevops
+          ports:
+          - containerPort: 8080
+          securityContext:
+            runAsUser: 1001
+      serviceAccount: azure-build-sa
+      serviceAccountName: azure-build-sa

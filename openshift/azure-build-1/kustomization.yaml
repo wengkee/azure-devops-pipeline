@@ -1,0 +1,10 @@
+---
+namespace: azure-build-1
+
+resources:
+  - ../base
+  - namespace.yaml
+  - clusterrolebinding.yaml
+
+patchesStrategicMerge:
+  - deployment.yaml

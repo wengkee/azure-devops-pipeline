@@ -52,6 +52,20 @@ Detailed steps at [Azure DevOps official page](https://learn.microsoft.com/en-us
 
         podman tag azp-agent:linux ${REGISTRY}/azure-build/azure-build-agent:latest
 
+## Create Service Account
+        oc create serviceaccount azure-build-sa
+        oc create -f openshift/serviceaccount/scc.yaml
+        oc adm policy add-scc-to-user nonroot-builder -z azure-build-sa
+
+        # Add image puller role for cross namespace img pulling
+        oc policy add-role-to-user \
+        system:image-puller \
+        system:serviceaccount:azure-build-1:azure-build-sa \
+        --namespace=azure-build
+
+
+
+
 ## References
 1. Azure DevOps with Managed OpenShift
 - https://cloud.redhat.com/experts/misc/azure-dev-ops-with-managed-openshift
