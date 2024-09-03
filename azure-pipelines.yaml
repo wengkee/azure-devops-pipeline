@@ -16,5 +16,5 @@ stages:
   - job: BuildAndPushJob
     displayName: Build and Push Job
     steps:
-    - script: podman ps
+    - script: podman build -t dotnet-counter-app:$(Build.BuildId) && podman images -f podman/app/Containerfile
       displayName: 'podman ps'
