@@ -29,6 +29,7 @@ stages:
     - script: podman tag localhost/$(image-name):$(Build.BuildId) $(image-registry)/$(project-name-dev)/$(image-name):$(Build.BuildId)
       displayName: 'podman tag'
 
+    # using the Docker task extension instead of bash in build agent
     # - task: Docker@2
     #   displayName: 'Push image to OpenShift internal registry'
     #   inputs:
@@ -41,7 +42,6 @@ stages:
         podman login -u azure-sa -p $(SA_SECRET) $(image-registry) --tls-verify=false
         podman push $(image-registry)/$(project-name-dev)/$(image-name):$(Build.BuildId)
       displayName: 'podman login and push'
-  - job: CleanUp
-    displayName: Clean Up Old Images
-    steps:
-    - script: podman image prune -a --filter "until=1h"
+
+    - script: podman image prune -a --filter "until=1h" -f
+      displayName: Clean up old images
