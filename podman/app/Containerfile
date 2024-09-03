@@ -21,7 +21,7 @@ ARG BUILD_DIR
 ENV BUILD_DIR="${BUILD_DIR}"
 FROM base AS final
 ENV ASPNETCORE_ENVIRONMENT "OPENSHIFT"
-COPY $BUILD_DIR/podman/app/publish/ .
+COPY ../publish/ .
 USER 1001
 ENTRYPOINT ["dotnet", "DotNet.Docker.dll"]
 
