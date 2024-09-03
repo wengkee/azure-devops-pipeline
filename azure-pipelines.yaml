@@ -1,0 +1,20 @@
+trigger:
+- main
+
+pool:
+  name: Default
+
+variables:
+  # project-name-dev: 'ado-openshift'
+  # project-name-uat: 'ado-openshift'
+  # image-name: 'wk-dotnet'
+
+stages:
+- stage: Build
+  displayName: Build and Push Image
+  jobs:
+  - job: BuildAndPushJob
+    displayName: Build and Push Job
+    steps:
+    - script: podman ps
+      displayName: 'podman ps'
