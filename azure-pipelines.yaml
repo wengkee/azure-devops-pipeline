@@ -44,4 +44,13 @@ stages:
       displayName: 'podman login and push'
 
     - script: podman image prune -a --filter "until=1h" -f
-      displayName: Clean up old images
+      displayName: clean up old images
+
+- stage: Deploy
+  dependsOn: Build
+  displayName: Deploy into OCP
+  jobs:
+  - job: DeployToOCP
+    displayName: Deploy to OCP
+    steps:
+    - script: echo "123"
