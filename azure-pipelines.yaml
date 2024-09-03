@@ -28,14 +28,14 @@ stages:
     - script: podman tag localhost/$(image-name):$(Build.BuildId) $(image-registry)/$(project-name-dev)/$(image-name):$(Build.BuildId)
       displayName: 'podman tag'
 
+    # - task: Docker@2
+    #   displayName: 'Push image to OpenShift internal registry'
+    #   inputs:
+    #     command: 'push'
+    #     containerRegistry: 'openshift-registry'
+    #     repository: '$(project-name-dev)/$(image-name)'
+    #     tags: $(Build.BuildId)
+
     # - script: podman login -u kubeadmin -p $(IMAGE_REGISTRY_SECRET) ${image-registry} --tls-verify=false
     #   displayName: 'podman login and push'
-    - task: Docker@2
-      displayName: 'Push image to OpenShift internal registry'
-      inputs:
-        command: 'push'
-        containerRegistry: 'openshift-registry'
-        repository: '$(project-name-dev)/$(image-name)'
-        tags: $(Build.BuildId)
-
 # && podman push ${image-registry}/$(project-name-dev)/$(image-name):$(Build.BuildId)
