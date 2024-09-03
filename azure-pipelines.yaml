@@ -29,7 +29,7 @@ stages:
     - script: podman tag localhost/$(image-name):$(Build.BuildId) ${image-registry}/$(project-name-dev)/$(image-name):$(Build.BuildId)
       displayName: 'podman tag'
 
-    - script: podman login -u kubeadmin -p $(IMAGE_REGISTRY_SECRET) ${image-registry} 
+    - script: podman login -u kubeadmin -p $(IMAGE_REGISTRY_SECRET) ${image-registry} --tls-verify=false
       displayName: 'podman login and push'
 
 # && podman push ${image-registry}/$(project-name-dev)/$(image-name):$(Build.BuildId)
