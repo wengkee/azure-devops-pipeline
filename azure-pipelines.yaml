@@ -16,7 +16,7 @@ stages:
   - job: BuildAndPushJob
     displayName: Build and Push Job
     steps:
-    - script: dotnet build "app/DotNet.Docker.csproj" -c Release
+    - script: pwd && ls && dotnet build "app/DotNet.Docker.csproj" -c Release
       displayName: 'dotnet build'
 
     - script: pwd && ls && podman build -t dotnet-counter-app:$(Build.BuildId) -f podman/app/Containerfile && podman images 
