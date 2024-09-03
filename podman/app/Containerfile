@@ -19,8 +19,6 @@ EXPOSE 80
 
 FROM base AS final
 ENV ASPNETCORE_ENVIRONMENT "OPENSHIFT"
-# WORKDIR /opt/app-root/app
-RUN cd .. && pwd
-COPY ./app/publish .
+COPY podman/app/publish .
 USER 1001
 ENTRYPOINT ["dotnet", "DotNet.Docker.dll"]
