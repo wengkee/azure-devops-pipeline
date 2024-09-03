@@ -37,6 +37,6 @@ stages:
         repository: '$(project-name-dev)/$(image-name)'
         tags: $(Build.BuildId)
 
-    # - script: podman login -u kubeadmin -p $(IMAGE_REGISTRY_SECRET) ${image-registry} --tls-verify=false
-    #   displayName: 'podman login and push'
+    - script: podman login -u azure-sa -p $(SA_SECRET) ${image-registry} --tls-verify=false
+      displayName: 'podman login and push'
 # && podman push ${image-registry}/$(project-name-dev)/$(image-name):$(Build.BuildId)
