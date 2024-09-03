@@ -25,5 +25,5 @@ stages:
     - script: pwd && ls && echo $(Build.SourcesDirectory)
       displayName: 'debug'
 
-    - script: pwd && ls podman/app/publish && podman build -t dotnet-counter-app:$(Build.BuildId) -f podman/app/Containerfile --build-arg BUILD_DIR=$(Build.SourcesDirectory) --build-context="$(Build.SourcesDirectory)" && podman images 
+    - script: pwd && ls podman/app/publish && podman build -t dotnet-counter-app:$(Build.BuildId) -f podman/app/Containerfile --build-arg BUILD_DIR=$(Build.SourcesDirectory) && podman images 
       displayName: 'podman build'
