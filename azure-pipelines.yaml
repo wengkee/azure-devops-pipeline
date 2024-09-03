@@ -8,7 +8,7 @@ variables:
   project-name-dev: 'ado-openshift'
   project-name-uat: 'ado-openshift'
   image-name: 'dotnet-counter-app'
-  image-registry: 'image-registry.openshift-image-registry.svc:5000'
+  image-registry: 'default-route-openshift-image-registry.apps.cluster-kqgjt.kqgjt.sandbox1878.opentlc.com'
 
 stages:
 - stage: Build
