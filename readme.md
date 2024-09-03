@@ -5,7 +5,7 @@ Detailed steps at [Azure DevOps official page](https://learn.microsoft.com/en-us
 
 1. Build the image
         
-        cd podman
+        cd podman/agent/
 
         podman build -t azp-agent:linux \
             -f Containerfile \
@@ -54,7 +54,7 @@ Detailed steps at [Azure DevOps official page](https://learn.microsoft.com/en-us
 
 ## Create Service Account
         oc create serviceaccount azure-build-sa
-        oc create -f openshift/serviceaccount/scc.yaml
+        oc create -f openshift/agent/serviceaccount/scc.yaml
         oc adm policy add-scc-to-user nonroot-builder -z azure-build-sa
 
         # Add image puller role for cross namespace img pulling
@@ -70,11 +70,11 @@ Detailed steps at [Azure DevOps official page](https://learn.microsoft.com/en-us
         --from-literal=AZP_POOL=${AZP_POOL}
 
 ## Deploy
-        oc apply -k openshift/azure-build-1
-        oc apply -f openshift/azure-build-1/rolebinding.yaml
+        oc apply -k openshift/agent/azure-build-1
+        oc apply -f openshift/agent/azure-build-1/rolebinding.yaml
 
 ## Delete
-        kustomize build openshift/azure-build-1 | oc delete -f -
+        kustomize build openshift/agent/azure-build-1 | oc delete -f -
 
 ## References
 1. Azure DevOps with Managed OpenShift

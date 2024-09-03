@@ -1,8 +1,8 @@
 FROM registry.access.redhat.com/ubi8/dotnet-60:latest
-ENV _BUILDAH_STARTED_IN_USERNS="" \
-    BUILDAH_ISOLATION=chroot \
-    STORAGE_DRIVER=vfs
-ENV TARGETARCH="linux-x64" 
+# ENV _BUILDAH_STARTED_IN_USERNS="" \
+#     BUILDAH_ISOLATION=chroot \
+#     STORAGE_DRIVER=vfs
+# ENV TARGETARCH="linux-x64" 
 
 USER root
 COPY start.sh .
