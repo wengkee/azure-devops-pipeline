@@ -5,9 +5,9 @@ pool:
   name: Default
 
 variables:
-  # project-name-dev: 'ado-openshift'
-  # project-name-uat: 'ado-openshift'
-  # image-name: 'wk-dotnet'
+  project-name-dev: 'ado-openshift'
+  project-name-uat: 'ado-openshift'
+  image-name: 'wk-dotnet'
 
 stages:
 - stage: Build
