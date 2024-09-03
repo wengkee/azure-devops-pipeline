@@ -7,7 +7,8 @@ pool:
 variables:
   project-name-dev: 'ado-openshift'
   project-name-uat: 'ado-openshift'
-  image-name: 'wk-dotnet'
+  image-name: 'dotnet-counter-app'
+  image-registry: 'default-route-openshift-image-registry.apps.cluster-kqgjt.kqgjt.sandbox1878.opentlc.com'
 
 stages:
 - stage: Build
@@ -25,5 +26,8 @@ stages:
     - script: podman build -t dotnet-counter-app:$(Build.BuildId) -f podman/app/Containerfile && podman images 
       displayName: 'podman build'
 
-    - script: oc project
-      displayName: 'oc'
+    - script: podman tag dotnet-counter-app:$(Build.BuildId) ${image-registry}/$(project-name-dev)/$(image-name):$(Build.BuildId)
+      displayName: 'podman tag'
+
+    - script: podman login -u kubeadmin -p $(IMAGE_REGISTRY_SECRET) ${image-registry} && podman push ${image-registry}/$(project-name-dev)/$(image-name):$(Build.BuildId)
+      displayName: 'podman login and push'
