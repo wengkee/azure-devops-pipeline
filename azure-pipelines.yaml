@@ -41,3 +41,7 @@ stages:
         podman login -u azure-sa -p $(SA_SECRET) $(image-registry) --tls-verify=false
         podman push $(image-registry)/$(project-name-dev)/$(image-name):$(Build.BuildId)
       displayName: 'podman login and push'
+  - job: CleanUp
+    displayName: Clean Up Old Images
+    steps:
+    - script: podman image prune -a --filter "until=1h"
