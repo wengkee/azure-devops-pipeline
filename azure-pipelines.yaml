@@ -25,7 +25,7 @@ stages:
     - script: podman build -t dotnet-counter-app:$(Build.BuildId) -f podman/app/Containerfile && podman images 
       displayName: 'podman build'
 
-    - script: podman tag localhost/$(image-name):$(Build.BuildId) ${image-registry}/$(project-name-dev)/$(image-name):$(Build.BuildId)
+    - script: podman tag localhost/$(image-name):$(Build.BuildId) $(image-registry)/$(project-name-dev)/$(image-name):$(Build.BuildId)
       displayName: 'podman tag'
 
     # - script: podman login -u kubeadmin -p $(IMAGE_REGISTRY_SECRET) ${image-registry} --tls-verify=false
