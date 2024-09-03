@@ -16,7 +16,7 @@ stages:
   - job: BuildAndPushJob
     displayName: Build and Push Job
     steps:
-    - script: pwd && ls && dotnet build "app/DotNet.Podman.csproj" -c Release
+    - script: pwd && ls && dotnet build "app/DotNet.Podman.csproj" -c Release -o app/build
       displayName: 'dotnet build'
 
     - script: pwd && ls && dotnet publish "app/DotNet.Podman.csproj" -c Release -o app/publish
