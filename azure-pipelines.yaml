@@ -22,5 +22,5 @@ stages:
     - script: pwd && ls && dotnet publish "app/DotNet.Podman.csproj" -c Release -o podman/app/publish
       displayName: 'dotnet publish'
 
-    - script: pwd && ls && podman build -t dotnet-counter-app:$(Build.BuildId) -f podman/app/Containerfile --build-arg BUILD_DIR=$(Build.SourcesDirectory) && podman images 
+    - script: pwd && ls podman/app/publish && podman build -t dotnet-counter-app:$(Build.BuildId) -f podman/app/Containerfile --build-arg BUILD_DIR=$(Build.SourcesDirectory) && podman images 
       displayName: 'podman build'
