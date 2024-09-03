@@ -17,8 +17,9 @@ EXPOSE 80
 # FROM build AS publish
 # RUN dotnet publish "DotNet.Docker.csproj" -c Release -o /opt/app-root/app/publish
 
+ARG BUILD_DIR
 FROM base AS final
 ENV ASPNETCORE_ENVIRONMENT "OPENSHIFT"
-COPY ./podman/app/publish .
+COPY $(BUILD_DIR)/podman/app/publish .
 USER 1001
 ENTRYPOINT ["dotnet", "DotNet.Docker.dll"]
