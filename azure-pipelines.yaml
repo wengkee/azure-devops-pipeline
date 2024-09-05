@@ -72,3 +72,4 @@ stages:
         connectionType: 'kubernetesServiceConnection'
         kubernetesServiceConnection: 'openshift'
         manifests: $(bake.manifestsBundle)
+        namespace: $(project-name-dev)
