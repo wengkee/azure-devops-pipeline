@@ -51,26 +51,28 @@ stages:
   condition: succeeded()
   displayName: Deploy into OCP
   jobs:
-  - job: DeployToOCP
+  - deployment: DeployToOCP
     displayName: Deploy to OCP
-    steps:
+    environment: 'ado-openshift'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: cd openshift/app && kustomize edit set image $(image-registry)/$(project-name-dev)/$(image-name)=$(image-registry)/$(project-name-dev)/$(image-name):$(Build.BuildId)
+            displayName: Update image tag
 
-    - script: cd openshift/app && kustomize edit set image $(image-registry)/$(project-name-dev)/$(image-name)=$(image-registry)/$(project-name-dev)/$(image-name):$(Build.BuildId)
-      displayName: Update image tag
+          - task: KubernetesManifest@1
+            name: bake
+            displayName: Bake K8s manifests from kustomization path
+            inputs:
+              action: bake
+              renderType: kustomize
+              kustomizationPath: openshift/app
 
-    - task: KubernetesManifest@1
-      name: bake
-      displayName: Bake K8s manifests from kustomization path
-      inputs:
-        action: bake
-        renderType: kustomize
-        kustomizationPath: openshift/app
-
-    - task: KubernetesManifest@1
-      displayName: Deploy K8s manifests
-      environment: ado-openshift
-      inputs:
-        connectionType: 'kubernetesServiceConnection'
-        kubernetesServiceConnection: 'openshift'
-        manifests: $(bake.manifestsBundle)
-        namespace: $(project-name-dev)
+          - task: KubernetesManifest@1
+            displayName: Deploy K8s manifests
+            inputs:
+              connectionType: 'kubernetesServiceConnection'
+              kubernetesServiceConnection: 'openshift'
+              manifests: $(bake.manifestsBundle)
+              namespace: $(project-name-dev)
