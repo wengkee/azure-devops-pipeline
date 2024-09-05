@@ -54,9 +54,9 @@ stages:
   - deployment: DeployToOCP
     displayName: Deploy to OCP
     environment: 
-      name: 'ado-openshift'
-      resourceName: 'wk-demo-cluster'
-      resourceType: 'kubernetes'
+      name: 'demo.ado-openshift'
+      # resourceName: 'wk-demo-cluster'
+      # resourceType: 'kubernetes'
     strategy:
       runOnce:
         deploy:
