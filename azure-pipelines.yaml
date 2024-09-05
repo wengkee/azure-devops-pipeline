@@ -54,3 +54,10 @@ stages:
     displayName: Deploy to OCP
     steps:
     - script: echo "123"
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'openshift'
+        namespace: 'ado-openshift'
+        command: 'get'
+        arguments: 'deployment'
