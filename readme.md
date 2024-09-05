@@ -9,7 +9,7 @@ Detailed steps at [Azure DevOps official page](https://learn.microsoft.com/en-us
 
         podman build -t azp-agent:linux \
             -f Containerfile \
-            --platform linux/amd64,linux/arm64 \
+            --platform linux/amd64 \
             --env AZP_AGENT_PACKAGE_LATEST_URL=https://vstsagentpackage.azureedge.net/agent/2.210.1/vsts-agent-linux-x64-2.210.1.tar.gz 
 
 1. Try running the agent in Podman
