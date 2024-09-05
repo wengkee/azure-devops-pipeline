@@ -61,8 +61,10 @@ stages:
         connectionType: 'Kubernetes Service Connection'
         kubernetesServiceEndpoint: 'openshift'
         namespace: 'ado-openshift'
-        command: 'apply'
-        useConfigurationFile: true
-        configurationType: 'inline'
-        inline: '-k openshift/app'
+        arguments: 'apply -k openshift/app'
         outputFormat: 'yaml'
+    - task: oc-cmd@3
+      inputs:
+        connectionType: 'OpenShift Connection Service'
+        openshiftService: 'openshift-cli-conn'
+        cmd: 'get deployment'
