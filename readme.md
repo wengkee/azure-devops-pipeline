@@ -59,9 +59,9 @@ Detailed steps at [Azure DevOps official page](https://learn.microsoft.com/en-us
 
         # Add image puller role for cross namespace img pulling
         oc policy add-role-to-user \
-        system:image-puller \
-        system:serviceaccount:azure-build-1:azure-build-sa \
-        --namespace=azure-build
+                system:image-puller \
+                system:serviceaccount:azure-build-1:azure-build-sa \
+                --namespace=azure-build
 
 ## Create Secrets
         oc create secret generic azdevops \                 

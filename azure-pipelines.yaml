@@ -54,7 +54,7 @@ stages:
   - job: DeployToOCP
     displayName: Deploy to OCP
     steps:
-    - script: $(cd openshift/app && kustomize edit set image $(image-name)=$(image-registry)/$(project-name-dev)/$(image-name):$(Build.BuildId))
+    - script: cd openshift/app && kustomize edit set image $(image-name)=$(image-registry)/$(project-name-dev)/$(image-name):$(Build.BuildId)
       displayName: Update image tag
     - task: Kubernetes@1
       inputs:
