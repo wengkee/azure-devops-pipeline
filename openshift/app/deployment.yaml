@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-counter-app
+spec:
+  selector:
+    matchLabels:
+      app: dotnet-counter-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dotnet-counter-app
+    spec:
+      containers:
+        - name: dotnet-counter-app
+          image: image-registry.openshift-image-registry.svc:5000/ado-openshift/dotnet-counter-app
+          ports:
+            - containerPort: 8080

@@ -53,11 +53,12 @@ stages:
   - job: DeployToOCP
     displayName: Deploy to OCP
     steps:
-    - script: echo "123"
+    - script: kustomize edit set image $(image-name)=$(image-registry)/$(project-name-dev)/$(image-name):$(Build.BuildId)
+      displayName: Update image tag
     - task: Kubernetes@1
       inputs:
         connectionType: 'Kubernetes Service Connection'
         kubernetesServiceEndpoint: 'openshift'
         namespace: 'ado-openshift'
-        command: 'get'
-        arguments: 'deployment'
+        command: 'apply'
+        arguments: '-k openshift/app'
