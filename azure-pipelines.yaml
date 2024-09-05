@@ -54,17 +54,21 @@ stages:
   - job: DeployToOCP
     displayName: Deploy to OCP
     steps:
+
     - script: cd openshift/app && kustomize edit set image $(image-name)=$(image-registry)/$(project-name-dev)/$(image-name):$(Build.BuildId)
       displayName: Update image tag
-    - task: Kubernetes@1
+
+    - task: KubernetesManifest@1
+      name: bake
+      displayName: Bake K8s manifests from kustomization path
       inputs:
-        connectionType: 'Kubernetes Service Connection'
-        kubernetesServiceEndpoint: 'openshift'
-        namespace: 'ado-openshift'
-        arguments: 'apply -k openshift/app'
-        outputFormat: 'yaml'
-    - task: oc-cmd@3
+        action: bake
+        renderType: kustomize
+        kustomizationPath: openshift/app
+
+    - task: KubernetesManifest@1
+      displayName: Deploy K8s manifests
       inputs:
-        connectionType: 'OpenShift Connection Service'
-        openshiftService: 'openshift-cli-conn'
-        cmd: 'get deployment'
+        connectionType: 'kubernetesServiceConnection'
+        kubernetesServiceConnection: 'openshift'
+        manifests: $(bake.manifestsBundle)
