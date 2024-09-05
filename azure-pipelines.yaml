@@ -58,8 +58,12 @@ stages:
       displayName: Update image tag
     - task: Kubernetes@1
       inputs:
+      inputs:
         connectionType: 'Kubernetes Service Connection'
         kubernetesServiceEndpoint: 'openshift'
         namespace: 'ado-openshift'
         command: 'apply'
-        arguments: '-k openshift/app'
+        useConfigurationFile: true
+        configurationType: 'inline'
+        inline: '-k openshift/app'
+        outputFormat: 'yaml'

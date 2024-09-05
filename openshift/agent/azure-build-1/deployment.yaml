@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: azure-build-agent
-          image: image-registry.openshift-image-registry.svc:5000/azure-build/azure-build-agent:latest
+          image: image-registry.openshift-image-registry.svc:5000/azure-build-1/azure-build-agent:latest

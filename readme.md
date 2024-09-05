@@ -44,20 +44,22 @@ Detailed steps at [Azure DevOps official page](https://learn.microsoft.com/en-us
 
 1. (Manual) Push image to OpenShift Internal Image Registry
 
-        oc new-project azure-build
+        oc new-project azure-build-1
 
         oc create imagestream azure-build-agent
 
         podman login -u <username> -p `oc whoami --show-token` ${REGISTRY}
 
-        podman tag azp-agent:linux ${REGISTRY}/azure-build/azure-build-agent:latest
+        podman tag azp-agent:linux ${REGISTRY}/azure-build-1/azure-build-agent:latest
+
+        podman push ${REGISTRY}/azure-build-1/azure-build-agent:latest
 
 ## Create Service Account
         oc create serviceaccount azure-build-sa
         oc create -f openshift/agent/serviceaccount/scc.yaml
         oc adm policy add-scc-to-user nonroot-builder -z azure-build-sa
 
-        # Add image puller role for cross namespace img pulling
+## (optional) Add image puller role for cross namespace img pulling
         oc policy add-role-to-user \
                 system:image-puller \
                 system:serviceaccount:azure-build-1:azure-build-sa \
