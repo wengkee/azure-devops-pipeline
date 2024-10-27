@@ -56,7 +56,7 @@ Detailed steps at [Azure DevOps official page](https://learn.microsoft.com/en-us
 
 ## Create Service Account
         oc create serviceaccount azure-build-sa
-        oc create -f openshift/agent/serviceaccount/scc.yaml
+        oc create -f openshift/agent/base/scc.yaml
         oc adm policy add-scc-to-user nonroot-builder -z azure-build-sa
 
 ## (optional) Add image puller role for cross namespace img pulling
